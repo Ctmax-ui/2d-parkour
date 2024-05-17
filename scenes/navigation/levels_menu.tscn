@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmjs7cbvqroei"]
+
+[ext_resource type="Script" path="res://scripts/levels_menu.gd" id="1_07y7f"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_07y7f")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="level_1" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level 1"
+
+[node name="level_2" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level 2"
+
+[node name="level_3" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Not Avilable"
+
+[node name="back" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/level_1" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/level_2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]
