@@ -19,7 +19,7 @@ func  _ready():
 
 func _physics_process(delta):
 	$pointes.text = "Coins:" + str(pointes)
-
+	
 	
 	if Input.is_action_just_pressed("attack") and not is_attacking :
 		attack()
@@ -50,21 +50,19 @@ func _physics_process(delta):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		
+	
 	move_and_slide()
-	
-	
+
+
 #attack 
 func attack():
 	$Area2D.monitoring = true
-
-	
 	
 	if not sprite_2d.flip_h:
 		$Area2D/CollisionShape2D.disabled=false
 	else:
 		$Area2D/CollisionShape2D2.disabled= false
-	
+
 	animation_player.play("attack", 0, 3)
 	is_attacking = true
 	timer.start()
@@ -84,3 +82,4 @@ func _on_area_2d_area_entered(area):
 	
 func _on_player_area_area_entered(area):
 	pointes += 1
+
