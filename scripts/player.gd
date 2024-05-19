@@ -82,4 +82,8 @@ func _on_area_2d_area_entered(area):
 	
 func _on_player_area_area_entered(area):
 	pointes += 1
+	
+	if area.name == "killzone":
+		$Node2D/AnimationPlayer.play("dead")
+
 

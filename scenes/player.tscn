@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://id4td1bh1584"]
+[gd_scene load_steps=44 format=3 uid="uid://id4td1bh1584"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ukigl"]
 [ext_resource type="Texture2D" uid="uid://ba3j3i8wq4p7m" path="res://assets/player_animation/run/knight-5.png.png" id="2_28eq8"]
@@ -29,6 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://dvl0gwmil1dlc" path="res://assets/player_animation/jump/knight-7.png.png" id="23_q5yga"]
 [ext_resource type="Texture2D" uid="uid://byxemrpk0a35x" path="res://assets/player_animation/jump/knight-8.png.png" id="24_t8hxi"]
 [ext_resource type="FontFile" uid="uid://b66vic5auqu4h" path="res://assets/fonts/PixelOperator8.ttf" id="29_jb7ui"]
+[ext_resource type="FontFile" uid="uid://cmbt5umh4pl68" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="30_etagc"]
+[ext_resource type="PackedScene" uid="uid://cvft23qr7equ6" path="res://scenes/navigation/canvas_layer.tscn" id="31_fbrx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmluh"]
 size = Vector2(7.5, 14)
@@ -128,6 +130,67 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_6mqtr"]
 radius = 6.08276
 
+[sub_resource type="Animation" id="Animation_jg7x6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_22hvr"]
+resource_name = "dead"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.376471), Color(0, 0, 0, 0.713726), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 0.419608), Color(1, 0, 0, 0.792157), Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nf78l"]
+_data = {
+"RESET": SubResource("Animation_jg7x6"),
+"dead": SubResource("Animation_22hvr")
+}
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 99
 collision_layer = 2
@@ -181,6 +244,33 @@ theme_override_fonts/font = ExtResource("29_jb7ui")
 theme_override_font_sizes/font_size = 10
 text = "Coin: 0"
 autowrap_mode = 3
+
+[node name="Node2D" type="Node2D" parent="."]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+offset_left = -277.0
+offset_top = -195.0
+offset_right = -237.0
+offset_bottom = -155.0
+scale = Vector2(12.64, 8.12)
+color = Color(0, 0, 0, 0)
+
+[node name="Label" type="Label" parent="Node2D"]
+offset_left = -57.0
+offset_top = -20.0
+offset_right = 59.0
+offset_bottom = 3.0
+theme_override_colors/font_color = Color(1, 0, 0, 0)
+theme_override_fonts/font = ExtResource("30_etagc")
+text = "You died"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
+libraries = {
+"": SubResource("AnimationLibrary_nf78l")
+}
+
+[node name="CanvasLayer" parent="." instance=ExtResource("31_fbrx7")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -20)
